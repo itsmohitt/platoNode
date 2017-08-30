@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>Blockchain Twitter</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/stylesheets/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    {{# if name}}
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h2>@{{name}}</h2>
+                            </div>
+                            <div class="col-md-2 pull-right">
+                                <a class="pull-right btn btn-primary" href="/">Home</a>
+                            </div>
+
+                        </div>
+                        <hr/>
+                    {{/if}}
+                    <ul class="list list-unstyled">
+                        {{# each tweets}}
+                            <li>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img src="{{this.user.profile_image_url}}" class="media-object img-circle"
+                                             style="width:60px">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">
+                                            <a target="_blank"
+                                               href="/get-data/{{this.user.screen_name }}">{{this.user.name}}
+                                            </a>
+                                            <small>&nbsp;&nbsp;@<a target="_blank"
+                                                                   href="https://www.twitter.com/{{this.user.screen_name}}">{{this.user.screen_name}}
+                                            </a>
+                                            </small>
+                                        </h4>
+                                        <p>
+                                            <small class="text-muted"><i
+                                                    class="glyphicon glyphicon-time"></i> {{this.created_at}}
+                                                via Twitter
+                                            </small>
+                                        </p>
+                                        <p>{{this.text}}</p>
+                                            {{# each this.entities.media }}
+
+                                                <a href="{{ this.url}}" class="img img-responsive" target="_blank"> <img
+                                                        width="200px" style="max-width:100%;max-height:300px" src="{{this.media_url}}"/></a>
+                                            {{/each}}
+
+
+                                    </div>
+                                </div>
+                            </li>
+                            <hr class="colorgraph">
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+</html>

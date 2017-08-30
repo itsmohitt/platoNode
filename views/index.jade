@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1= tweets
+  p Welcome to #{tweets}
+
+each {tweets}
+   p #{this}
+p No one is in your database!

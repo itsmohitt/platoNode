@@ -2,9 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Blockchain Twitter</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/stylesheets/style.css" rel="stylesheet"/>
 </head>
 <body>
-$END$
+    <div class="container">
+        <div class="row">
+            <div class=" jumbotron col-md-12"
+                 style="color:white;background: url('/images/blockchain.webp');background-size: cover">
+                <h1 class=" text-center text-success ">BlockChain Twitter</h1>
+
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-body text-center">
+                        <h3 ><a href="/get-data">Tweets in records</a></h3>
+                        <p class="lead text-white"></p>
+
+                    </div>
+                </div>
+            </div>
+        {{# each tweetData}}
+            <div class="col-md-4">
+                <div class="panel">
+                <div class="panel-body">
+                <div class="media">
+                    <div class="media-left">
+                        <img src="{{this.user.profile_image_url}}" class="media-object img-circle"
+                             style="width:60px">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a target="_blank"
+                               href="/get-data/{{this.user.screen_name }}">{{this.user.name}}
+                            </a><br/>
+                            <small>&nbsp;&nbsp;@<a target="_blank"
+                                                   href="/get-data/{{this.user.screen_name}}">{{this.user.screen_name}}
+                            </a>
+                            </small>
+                        </h4>
+
+                        <p>Tweet Count : <strong>{{this.count}}</strong><p>
+
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+            {{/each}}
+
+
+        </div>
+    </div>
 </body>
 </html>

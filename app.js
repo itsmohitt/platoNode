@@ -7,12 +7,12 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+var Twitter = require('twitter');
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -41,6 +41,48 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+
+
+
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://127.0.0.1:27017/mydb";
+
+MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    db.createCollection("tweets", function(err, res) {
+        if (err) throw err;
+        console.log("Collection created!");
+        db.close();
+    });
+});
+
+
+var client = new Twitter({
+    consumer_key: 'yOTtNuIyaEBGT825culpz6ZQ8',
+    consumer_secret: 'lNahQ7OXdn4yoKG2eSLxbOtDcipg9IJ9YBdKeysBbiErdk2uzg',
+    access_token_key: '3772433354-EwlnWXPKJGAoSwefwrIA7jVPNppXgV1bzHFUyr2',
+    access_token_secret: 'g6j4OlJG5HaKSkD87WDjvUM3GBWJWbAM8sGWHnn67CwAn'
+});
+client.stream('statuses/filter', {track: 'blockchain bitcoin'}, function(stream) {
+    stream.on('data', function(event) {
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            event._id=event.id_str;
+            console.log(event._id +" "+event.id_str);
+            db.collection("twitter").insertOne(event, function(err, res) {
+                if (err) throw err;
+              //  console.log("1 document inserted");
+                db.close();
+            });
+        });
+      //  console.log(event && event.text);
+    });
+    stream.on('error', function(error) {
+        throw error;
+    });
 });
 
 module.exports = app;
